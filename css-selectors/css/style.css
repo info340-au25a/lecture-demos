@@ -6,8 +6,22 @@ header {
   margin-bottom: 1em;
 }
 
+header p {
+  color: goldenrod;
+}
+
+h1, p {
+  font-family: "Papyrus"
+}
+
+
 h2 {
+  font-family: "Papyrus";
   color: rebeccapurple;
+}
+
+li.highlight {
+  background-color: yellow;
 }
 
 p {
@@ -20,8 +34,16 @@ img {
   background-color: white;
 }
 
+img:hover {
+  max-height: 200px;
+}
+
 /* elements with class="about-section" */
 .about-section {
   background-color: #eee;
   padding: .25em .5em;
+}
+
+.about-section p {
+  font-size: 1.2em;
 }
