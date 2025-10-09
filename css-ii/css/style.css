@@ -3,35 +3,83 @@ h1, h2, h3 {
   font-family: 'Helvetica';
 }
 
-h2 {
-  color: rebeccapurple;
+h1 {
+  padding-bottom: 1em;
+  padding-top: .5em;
+  border: 3px dashed red;
+  margin-top: 0;
+  margin-bottom: 1.5em;
 }
 
+h2 {
+  font-size: 1.8em;
+  color: rebeccapurple;
+  background: goldenrod;
+}
+
+.about-section h2 {
+  background-color: inherit;
+}
 
 /* nav bar */
 nav {
   color: white;
   background-color: #4b2e83;
+  /* position: sticky;
+  top: 0;
+  left: 0; */
 }
 
 nav a {
   color: white;
 }
 
+nav ul {
+  display: flex;
+}
+
+nav li {
+  display: inline-block;
+  /* border: 2px solid goldenrod; */
+  padding: 0;
+  margin: 0;
+  /* padding-bottom: 1em; */
+  margin-bottom: 1em;
+}
+
+.column-box {
+  display: flex;
+}
 
 /* about section */
 .about-section {
-  background-color: #f8f8f8;
+  background-color:lightgrey; 
+  flex-basis: 20%;
+  margin-right: 10px;
 }
 
 .about-section img {
   max-width: 150px;
+  /* position: fixed; */
+  top: -50px;
+  left: 80px;
 }
 
 
 /* topics cards */
 .topics-section .card {
   border: 1px solid black;
+  flex-grow: 1;
+}
+
+.topics-section .card.card-html {
+  /* flex-grow: 3; */
+}
+
+.topics-section .card-deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .topics-section img {
