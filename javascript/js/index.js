@@ -74,4 +74,8 @@ for(const personObj of peopleArray){
 }
 
 
+function greet(greeting, name){
+    return greeting  + ", " + name;
+}
+
 
