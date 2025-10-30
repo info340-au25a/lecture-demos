@@ -3,3 +3,7 @@ header {
   background-color: rebeccapurple;
   padding: .5em;
 }
+
+img {
+  max-width: 150px;
+}
