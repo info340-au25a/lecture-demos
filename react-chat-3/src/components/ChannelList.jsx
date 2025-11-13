@@ -16,7 +16,8 @@ export function ChannelList(props) {
 
     const transformed = (
       <li className={classListString} key={channelNameString}>
-        <a name={channelNameString} href={"/"+channelNameString} onClick={handleClick}>
+        <a name={channelNameString} href={"/"+channelNameString} 
+        onClick={handleClick}>
           {channelNameString}
         </a>
       </li>

@@ -6,7 +6,7 @@ import INITIAL_CHAT_LOG from '../data/chat_log.json'
 
 export function ChatPane(props) {
   console.log("rendering chatpane")
-  const { currentChannel } = props;
+  const { currentChannel, currentUser } = props;
 
   const [msgStateArray, setMsgStateArray] = useState(INITIAL_CHAT_LOG); 
   //console.log(msgStateArray);
@@ -48,16 +48,17 @@ export function ChatPane(props) {
   return (
     <>
       <div className="scrollable-pane pt-2 my-2">
+
+        {false && <p>Hello world</p>}
+
         {/* conditional rendering */}
-        { messageItemArray.length === 0 && 
-          <p>No messages yet</p>
-        }
+        { messageItemArray.length === 0 && <p>No messages yet</p> }
 
         {/* Messages */}
         {messageItemArray}
       </div>
 
-      <ComposeForm currentChannel={currentChannel} addMessageFunction={addMessage} />
+      <ComposeForm currentUser={currentUser} currentChannel={currentChannel} addMessageFunction={addMessage} />
       </>
   )
 }

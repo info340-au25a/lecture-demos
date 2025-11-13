@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import DEFAULT_USERS from '../data/users.json';
 
 export function HeaderBar(props) {
+  const { currentUser, changeUserFunction } = props;
 
   //event handler
   const handleClick = (event) => {
@@ -11,11 +12,16 @@ export function HeaderBar(props) {
 
     console.log(selectedUserObj);
     //do something with userObj!
+    changeUserFunction(selectedUserObj);
   }
 
   //for convenience
   const userButtons = DEFAULT_USERS.map((userObj) => {
     let classListString = "btn user-icon"
+
+    if(userObj.userId == currentUser.userId) {
+      classListString += " bg-success";
+    }
 
     return (
       <button className={classListString} key={userObj.userName} 
