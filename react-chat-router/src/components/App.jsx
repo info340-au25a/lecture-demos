@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 
+import { Route, Routes } from 'react-router';
+
 import { HeaderBar } from './HeaderBar.jsx';
 
 import ChatPage from './ChatPage.jsx';
@@ -35,15 +37,23 @@ function App(props) {
     <div className="container-fluid d-flex flex-column">
       <HeaderBar currentUser={currentUser} />
 
-      {/* <Static.WelcomePage /> */}
-      <ChatPage 
-        currentUser={currentUser} 
-        messageArray={messageStateArray}
-        addMessageFunction={addMessage}
-        />
-      {/* <Static.AboutPage /> */}
-      <SignInPage currentUser={currentUser} changeUserFunction={changeUser} />
-      {/* <Static.ErrorPage /> */}
+      <Routes>
+        <Route index element={ <Static.WelcomePage /> } />
+        <Route path="/about" element={ <Static.AboutPage /> } />
+
+        <Route path="/chat/:channelName?" element={
+          <ChatPage 
+            currentUser={currentUser} 
+            messageArray={messageStateArray}
+            addMessageFunction={addMessage}
+          />
+        } /> 
+        <Route path="/signin" element={
+          <SignInPage currentUser={currentUser} changeUserFunction={changeUser} />
+        } />
+        <Route path="*" element={<Static.ErrorPage />} />
+
+      </Routes>      
     </div>
   );
 }
