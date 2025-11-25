@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 import { Routes, Route, Outlet, Navigate, useNavigate } from 'react-router';
 
+import { getDatabase, ref, set as firebaseSet, push as firebasePush, onValue } from 'firebase/database';
+
 import { HeaderBar } from './HeaderBar.jsx';
 
 import ChatPage from './ChatPage.jsx';
@@ -24,6 +26,34 @@ function App(props) {
 
   }, []) //array is list of variables that will cause this to rerun if changed
 
+  useEffect(() => {
+    const db = getDatabase();
+    const allMessagesRef = ref(db, "allMessages");
+
+    onValue(allMessagesRef, (snapshot) => {
+      //what to do when the data changes
+      console.log("database changed!");
+      const dataObj = snapshot.val();
+      console.log(dataObj);
+      const keyArray = Object.keys(dataObj);
+
+      const dataArray = keyArray.map((keyString) => {
+        const transformed = dataObj[keyString]
+        return transformed;
+      })
+
+      console.log(dataArray);
+
+      //have ["","",""]
+      //want [{}, {}, {}]
+
+
+      setMessageStateArray(dataArray);
+    })
+
+  }, [])
+
+
   const changeUser = (userObj) => {
     console.log("changing user to", userObj.userName);
     setCurrentUser(userObj);
@@ -31,7 +61,7 @@ function App(props) {
       navigateTo('/chat/'); //go to chat after login
     }
   }
-
+  
   const addMessage = (userObj, text, channel) => {
     const newMessageObj = {
       "userId": userObj.userId,
@@ -41,8 +71,20 @@ function App(props) {
       "timestamp": Date.now(),
       "channel": channel
     }
-    const newMessageArray = [...messageStateArray, newMessageObj];
-    setMessageStateArray(newMessageArray); //update state & rerender
+
+    //put that message into the database
+    const db = getDatabase();
+    const allMessagesRef = ref(db, "allMessages");
+    firebasePush(allMessagesRef, newMessageObj);
+
+    // const dayOfWeek = "monday"
+    // const profRef = ref(db, "professor/schedule/"+dayOfWeek);
+    // firebaseSet(profRef, "Office Hours");
+
+
+    //put that new message into the state
+    // const newMessageArray = [...messageStateArray, newMessageObj];
+    // setMessageStateArray(newMessageArray); //update state & rerender
   }
 
   return (
