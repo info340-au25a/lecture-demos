@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+import { getApp } from 'firebase/app';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { updateProfile } from 'firebase/auth';
+
 export default function ProfilePage(props) {
   const { currentUser } = props;
   //convenience
@@ -13,12 +17,28 @@ export default function ProfilePage(props) {
     if(event.target.files.length > 0 && event.target.files[0]) {
       const imageFile = event.target.files[0]
       setImageFile(imageFile);
+      console.log(URL.createObjectURL(imageFile));
       setImageUrl(URL.createObjectURL(imageFile));
     }
   }
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     console.log("Uploading", imageFile);
+    const storage = getStorage(getApp(), "gs://info340-media.firebasestorage.app");
+    const avatarRef = storageRef(storage, "lecture-demo/userImages/"+currentUser.uid + ".png");
+
+    await uploadBytes(avatarRef, imageFile)
+    const urlString = await getDownloadURL(avatarRef)
+    console.log(urlString);
+
+    //do something with that urlString -- assign to the user
+    updateProfile(currentUser, {photoURL: urlString});
+
+    // ref(db, "userImages/uid/picture"),
+    // firebaseSet(ref, urlString);
+
+
+
   }
 
   return (
